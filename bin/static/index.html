@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+</head>
+<body>
+<div class="drop-select">
+    <input class="drop-input" type="text" readonly>
+    <ul class="select">
+        <li>a12345</li>
+        <li>b12345</li>
+        <li>c12345</li>
+        <li>d12345</li>
+        <li>e12345</li>
+        <li>f12345</li>
+    </ul>
+</div>
+<style type="text/css">
+    *, *:before, *:after {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    .hide {
+        display: none !important;
+    }
+
+    input {
+        width: 100%;
+        height: inherit;
+        line-height: 38px;
+    }
+
+    .drop-select {
+        width: 200px;
+        position: relative;
+        height: 40px;
+    }
+
+    .drop-select:hover .select {
+        display: block !important;
+    }
+
+    .drop-select:hover .select li{
+        cursor: pointer;
+    }
+
+    .select {
+        position: absolute;
+        display: none;
+        top: 40px;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        border: 1px solid #DDD;
+        list-style-type: none;
+        text-align: center;
+    }
+
+    .select li {
+        font-size: 16px;
+        line-height: 40px;
+        -webkit-transition: all .15s;
+        -moz-transition: all .15s;
+        -ms-transition: all .15s;
+        -o-transition: all .15s;
+        transition: all .15s;
+    }
+
+    .select li:hover {
+        color: white;
+        background: red;
+    }
+</style>
+<script src="/public/bower_components/jquery/dist/jquery.js"></script>
+<script type="text/javascript">
+    var select = $('.select');
+    select.bind('click', function () {
+        select.addClass('hide');
+        setTimeout(function () {
+            select.removeClass('hide');
+        }, 100);
+    });
+</script>
+</body>
+</html>
