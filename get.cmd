@@ -1,6 +1,6 @@
-go get -u -v golang.org/x/oauth2
-go get -u -v golang.org/x/net
-go get -u -v github.com/unrolled/render
-go get -u -v github.com/gorilla/mux
-go get -u -v github.com/gorilla/websocket
-go get -u -v github.com/gorilla/handlers
+go get -u github.com/labstack/echo
+go get -u github.com/rs/cors
+go get -u golang.org/x/net/websocket
+go get -u github.com/unrolled/render
+go get -u github.com/stretchr/testify/assert
+go get -u github.com/unrolled/render

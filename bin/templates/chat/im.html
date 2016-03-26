@@ -1,59 +1,36 @@
-<h2>WebSocket Test</h2>
-<div id="output"></div>
-<script language="javascript" type="text/javascript">
+<head>
+    <meta charset="utf-8">
+    <title>WebSocket</title>
+</head>
 
-    var wsUri = "ws://localhost:8080/ws";
-    //var wsUri = "ws://localhost/socket";
-    //var wsUri = "ws://echo.websocket.org";
-    var output, websocket;
-    function init() {
-        output = document.getElementById("output");
-        testWebSocket();
-    }
-    function testWebSocket() {
-        websocket = new WebSocket(wsUri);
-        websocket.onopen = function (evt) {
-            onOpen(evt)
-        };
-        websocket.onclose = function (evt) {
-            onClose(evt)
-        };
-        websocket.onmessage = function (evt) {
-            onMessage(evt)
-        };
-        websocket.onerror = function (evt) {
-            onError(evt)
-        };
-    }
+<body>
+<p id="output"></p>
 
-    function onOpen(evt) {
-        writeToScreen("CONNECTED");
-        doSend("WebSocket rocks");
-    }
-    function onClose(evt) {
-        writeToScreen("DISCONNECTED");
-    }
+<script>
+    var loc = window.location;
+    var uri = 'ws:';
 
-    function onMessage(evt) {
-        writeToScreen('<span style="color: blue;">RESPONSE: ' + evt.data + '</span>');
-        websocket.close();
+    if (loc.protocol === 'https:') {
+        uri = 'wss:';
     }
+    uri += '//' + loc.host;
+    uri += loc.pathname + 'ws';
 
-    function onError(evt) {
-        writeToScreen('<span style="color: red;">ERROR:</span> ' + evt.data);
-    }
+    ws = new WebSocket(uri);
 
-    function doSend(message) {
-        writeToScreen("SENT: " + message);
-        websocket.send(message);
-    }
+    ws.onopen = function() {
+        console.log('Connected')
+    };
 
-    function writeToScreen(message) {
-        var pre = document.createElement("p");
-        pre.style.wordWrap = "break-word";
-        pre.innerHTML = message;
-        output.appendChild(pre);
-    }
+    ws.onmessage = function(evt) {
+        var out = document.getElementById('output');
+        out.innerHTML += evt.data + '<br>';
+    };
 
-    window.addEventListener("load", init, false);
+    setInterval(function() {
+        ws.send('Hello, Server!');
+    }, 1000);
 </script>
+</body>
+
+</html>
