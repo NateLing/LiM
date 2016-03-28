@@ -9,6 +9,7 @@ import (
 	"html/template"
 	"io"
 	"lim/router"
+	"runtime"
 )
 
 type Template struct {
@@ -20,6 +21,8 @@ func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Con
 }
 
 func main() {
+	runtime.GOMAXPROCS(runtime.NumCPU())
+
 	tpl := &Template{
 		templates: template.Must(template.ParseGlob("templates/*.html")),
 	}
