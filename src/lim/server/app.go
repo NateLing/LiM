@@ -38,7 +38,7 @@ func main() {
 	}).Handler))
 
 	echo.SetRenderer(tpl)
-	echo.File("/favicon.ico", "public/favicon.ico")
+	echo.File("/favicon.ico", "/favicon.ico")
 
 	// Websocket
 	echo.Get("/ws", standard.WrapHandler(websocket.Handler(func(ws *websocket.Conn) {

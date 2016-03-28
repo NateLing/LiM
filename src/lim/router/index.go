@@ -5,7 +5,10 @@ import (
 )
 
 func Index() echo.HandlerFunc {
+	data := &RData{
+		Title: "Index",
+	}
 	return func(c echo.Context) error {
-		return HTML(c, "index", nil)
+		return HTML(c, "index", data)
 	}
 }

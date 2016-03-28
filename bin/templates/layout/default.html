@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-{{template "head" .}}
+{{template "HEAD" .}}
 <body>
-{{yield}}
+{{template "HEADER"}}
+{{template "NAV"}}
+<section>
+    {{yield}}
+</section>
+{{template "FOOTER"}}
 </body>
 </html>

@@ -8,6 +8,10 @@ import (
 	"net/http"
 )
 
+type RData struct {
+	Title string
+}
+
 var Render = render.New(render.Options{
 	Directory:                 "templates",                                      // Specify what path to load the templates from.
 	Layout:                    "layout/default",                                 // Specify a layout template. Layouts can call {{ yield }} to render the current template or {{ partial "css" }} to render a partial from the current template.
