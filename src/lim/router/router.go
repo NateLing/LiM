@@ -3,6 +3,7 @@ package router
 import (
 	"github.com/labstack/echo"
 	"net/http"
+	"strconv"
 )
 
 func HTTPErrorHandler() echo.HTTPErrorHandler {
@@ -13,7 +14,7 @@ func HTTPErrorHandler() echo.HTTPErrorHandler {
 		if he, ok := err.(*echo.HTTPError); ok {
 			code = he.Code
 		}
-		data.Title = code
+		data.Title = strconv.Itoa(code)
 		switch code {
 		case 404:
 			page = "404"
@@ -22,7 +23,7 @@ func HTTPErrorHandler() echo.HTTPErrorHandler {
 			page = "502"
 			break
 		default:
-			page = "unknow"
+			page = "error"
 			break
 		}
 		HTML(c, page, data)
