@@ -17,9 +17,13 @@ func main() {
 	echo := echo.New()
 
 	// Middleware
-	echo.Use(middleware.Logger())
-	echo.Use(middleware.Gzip())
+	echo.Use(middleware.LoggerFromConfig(middleware.LoggerConfig{
+		Format: "method=${method}, status=${status}, uri=${uri},  took=${response_time}, sent=${response_size} bytes\n",
+	}))
 	echo.Use(middleware.Recover())
+	/*echo.Use(middleware.GzipFromConfig(middleware.GzipConfig{
+		Level: -1,
+	}))*/
 	echo.Use(middleware.Static("public"))
 
 	// CORS

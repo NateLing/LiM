@@ -32,7 +32,4 @@ func HTTPErrorHandler() echo.HTTPErrorHandler {
 
 func AppRouter(echo *echo.Echo) {
 	echo.Get("/", Index())
-
-	// Error handler
-	echo.SetHTTPErrorHandler(HTTPErrorHandler())
 }

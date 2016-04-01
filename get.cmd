@@ -1,3 +1,4 @@
+go get -u github.com/labstack/gommon
 go get -u github.com/labstack/echo
 go get -u github.com/rs/cors
 go get -u golang.org/x/net/websocket
