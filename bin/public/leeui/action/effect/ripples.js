@@ -1,7 +1,7 @@
 /**
  * Created by LingR on 2016/4/1.
  */
-var ripplyScott = function (document) {
+var ripplyScott = function () {
     var circle = document.getElementById('js-ripple'),
         ripple = document.querySelectorAll('.js-ripple');
 
@@ -46,11 +46,12 @@ var ripplyScott = function (document) {
         init: function (target, timing) {
             var button = document.getElementById(target);
 
-            button.addEventListener('click', function (event) {
-                rippleAnimation.call(this, event, timing);
-            });
+            if (button instanceof HTMLElement)
+                button.addEventListener('click', function (event) {
+                    rippleAnimation.call(this, event, timing);
+                });
         }
     };
-}(window.document);
+}();
 
 ripplyScott.init('js-ripple-btn', 0.75);

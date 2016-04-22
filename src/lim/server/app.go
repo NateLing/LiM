@@ -4,9 +4,7 @@ import (
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/engine/standard"
 	"github.com/labstack/echo/middleware"
-	"github.com/rs/cors"
 	"golang.org/x/net/websocket"
-	"lim/router"
 	"runtime"
 )
 
@@ -14,25 +12,27 @@ func main() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 
 	// Echo instance
-	echo := echo.New()
+	mux := echo.New()
+	mux.Static("/", "public")
 
 	// Middleware
-	echo.Use(middleware.LoggerFromConfig(middleware.LoggerConfig{
-		Format: "method=${method}, status=${status}, uri=${uri},  took=${response_time}, sent=${response_size} bytes\n",
+	mux.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
+		Format: "method=${method}, status=${status}, uri=${uri}\n",
 	}))
-	echo.Use(middleware.Recover())
-	/*echo.Use(middleware.GzipFromConfig(middleware.GzipConfig{
-		Level: -1,
-	}))*/
-	echo.Use(middleware.Static("public"))
+	mux.Use(middleware.Recover())
+	mux.Use(middleware.GzipWithConfig(middleware.GzipConfig{
+		Level: 5,
+	}))
 
 	// CORS
-	echo.Use(standard.WrapMiddleware(cors.New(cors.Options{
-		AllowedOrigins: []string{"http://localhost"},
-	}).Handler))
+	mux.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"http://localhost"},
+		AllowMethods: []string{echo.GET, echo.HEAD, echo.PUT, echo.POST, echo.DELETE},
+		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType},
+	}))
 
 	// Websocket
-	echo.Get("/ws", standard.WrapHandler(websocket.Handler(func(ws *websocket.Conn) {
+	mux.Get("/ws", standard.WrapHandler(websocket.Handler(func(ws *websocket.Conn) {
 		for {
 			websocket.Message.Send(ws, "Hello, Client!")
 			msg := ""
@@ -41,7 +41,7 @@ func main() {
 		}
 	})))
 
-	router.AppRouter(echo)
+	AppRouter(mux)
 
-	echo.Run(standard.New(":80"))
+	mux.Run(standard.New(":80"))
 }
