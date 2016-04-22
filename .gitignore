@@ -3,6 +3,10 @@
 *.a
 *.so
 
+pkg
+bin/node_modules
+bin/public/bower_components
+
 # Folders
 _obj
 _test
